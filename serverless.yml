@@ -1,0 +1,29 @@
+service: putzplan
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  profile: serverless-putzplan-agent
+  region: eu-central-1
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
+
+plugins:
+  - serverless-domain-manager
+ 
+custom:
+  customDomain:
+    domainName: putzen.jnthn.ws
+    basePath: ''
+    createRoute53Record: true
+    endpointType: regional
+    securityPolicy: tls_1_2
+    apiType: http
